@@ -5,8 +5,8 @@
 This repository contains Image Generator application 
 which generates a 5 x 2 image collage. 
 The application follows PHP OOP principles and utilizes the Twig templating engine which uses Tailwind.
-The application runs in PHP 7.4. It converts images to predefine size and makes them transparent.
-Due to heavy image processing use of Cache is recommended, however.
+The application runs in PHP 7.4. It converts images to a predefined size and makes them transparent.
+Due to heavy image processing use of Cache is recommended.
 
 Installation:
 
