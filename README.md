@@ -1,6 +1,6 @@
 # Image Generator
 
-![Screenshot](App/images/screenshot.jpg)
+![Screenshot](images/screenshot.jpg)
 
 This repository contains Image Generator application 
 which generates a 5 x 2 image collage. 
