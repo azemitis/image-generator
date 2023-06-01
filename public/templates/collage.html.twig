@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+    <div class="flex justify-center items-center h-screen bg-gray-300">
+        <div class="grid grid-cols-5 justify-center" style="margin: 0 10px;">
+            {% for image in images %}
+                <div class="col-span-1 flex justify-center" style="margin: 10px;">
+                    <img src="{{ image.getPath() }}"
+                         alt="{{ image.getFilename() }}" class="h-auto max-w-full opacity-90" style="margin: 0 10px;">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
