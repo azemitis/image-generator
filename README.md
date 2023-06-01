@@ -1,5 +1,7 @@
 # Image Generator
 
+![Screenshot](App/images/screenshot.jpg)
+
 This repository contains Image Generator application 
 which generates a 5 x 2 image collage. 
 The application follows PHP OOP principles and utilizes the Twig templating engine which uses Tailwind.
