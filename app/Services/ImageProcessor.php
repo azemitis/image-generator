@@ -3,17 +3,23 @@
 namespace App\Services;
 
 use Intervention\Image\ImageManager;
+use App\Cache;
 
 class ImageProcessor
 {
     public static function mainProcessor(string $imagePath): array
     {
+        $cacheKey = 'processed_image_' . $imagePath;
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
         $manager = new ImageManager(['driver' => 'gd']);
         $image = $manager->make($imagePath);
 
-        $image->pixelate(1);
         $tempPath = __DIR__ . '/../../storage/temp.png';
 
+        $image->pixelate(1);
         $image->save($tempPath);
 
         $tempImage = imagecreatefrompng($tempPath);
@@ -30,11 +36,15 @@ class ImageProcessor
 
         $resizedImage = self::resize($tempPath);
 
-        return [
+        $processedImage = [
             'width' => $resizedImage->width(),
             'height' => $resizedImage->height(),
             'dataUrl' => $resizedImage->encode('data-url')->encoded,
         ];
+
+        Cache::remember($cacheKey, $processedImage, 3600);
+
+        return $processedImage;
     }
 
     public static function resize(string $imagePath): \Intervention\Image\Image

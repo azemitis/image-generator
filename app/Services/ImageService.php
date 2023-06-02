@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Image;
 use App\Repositories\ImageRepository;
+use App\Cache;
 
 class ImageService
 {
@@ -14,7 +15,14 @@ class ImageService
 
         $processedImages = [];
         foreach ($images as $image) {
-            $processedImage = ImageProcessor::mainProcessor($path . '/' . $image['name']);
+            $cacheKey = 'image_' . $image['name'];
+            if (Cache::has($cacheKey)) {
+                $processedImage = Cache::get($cacheKey);
+            } else {
+                $processedImage = ImageProcessor::mainProcessor($path . '/' . $image['name']);
+                Cache::remember($cacheKey, $processedImage, 3600);
+            }
+
             $imageModel = new Image(0, $image['name'], $processedImage['width'],
                 $processedImage['height'], $processedImage['dataUrl']);
             $processedImages[] = $imageModel;
